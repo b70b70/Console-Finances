@@ -86,3 +86,21 @@ var finances = [
   ['Jan-2017', 138230],
   ['Feb-2017', 671099],
 ];
+
+
+
+
+
+
+let netProfit = 0;
+
+for (let i = 0; i < finances.length; i++) {
+  let subArray = finances[i];
+
+   
+     netProfit += subArray[1];
+  
+
+ }
+
+  console.log(`Total Months: ${finances.length}\nTotal: $${netProfit}`);
