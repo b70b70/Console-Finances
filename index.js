@@ -93,14 +93,17 @@ var finances = [
 
 
 let netProfit = 0;
+let totalChange = 0;
 
-for (let i = 0; i < finances.length; i++) {
+for (let i = 1; i < finances.length; i++) {
   let subArray = finances[i];
-
-   
+  let difference = subArray[1] - finances[i - 1][1];
+    totalChange += difference;
      netProfit += subArray[1];
-  
-
  }
 
-  console.log(`Total Months: ${finances.length}\nTotal: $${netProfit}`);
+ let averageChange = totalChange / (finances.length - 1);
+
+
+
+console.log(`Total Months: ${finances.length}\nTotal: $${netProfit}\nAverage Change: ${averageChange}`)
