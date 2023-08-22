@@ -89,21 +89,47 @@ var finances = [
 
 
 
-
-
-
 let netProfit = 0;
 let totalChange = 0;
 
-for (let i = 1; i < finances.length; i++) {
-  let subArray = finances[i];
-  let difference = subArray[1] - finances[i - 1][1];
+// Initialize the greatestIncrease and greatestDecrease values with the first month's profit difference
+let greatestIncrease = { month: finances[0][0], value: 0 };
+let greatestDecrease = { month: finances[0][0], value: 0 };
+
+// used a for loop to iterate through each (month) in finances array. Inside the loop, you're extracting the profit amount from the subarray of the current month (subArrayAmount) and adding it to the netProfit variable, which is keeping track of the total profits so far.
+for (let i = 0; i < finances.length; i++) {
+  let subArrayAmount = finances[i][1];
+  netProfit += subArrayAmount;
+
+// In this section, I check whether the loop index i is greater than 0. If it is, then I'm not in the first iteration (month), as there no months to compare on the first one. Within this segment, I calculate the profit difference (difference) between the present month and the preceding month's profit. I then add this difference to my totalChange variable, which monitors the overall change in profits.
+
+// I check whether the calculated difference surpasses the present value of greatestIncrease.value. I update the greatestIncrease object to retain the details of this month as the one with the most substantial profit increase.
+
+// I check whether the difference is lower than the current value of greatestDecrease.value. If this is true, I change the greatestDecrease object to this month's particulars as the month featuring the most significant decline in profits.
+
+  if (i > 0) {
+    let difference = subArrayAmount - finances[i - 1][1];
     totalChange += difference;
-     netProfit += subArray[1];
- }
 
- let averageChange = totalChange / (finances.length - 1);
+    if (difference > greatestIncrease.value) {
+      greatestIncrease.value = difference;
+      greatestIncrease.month = finances[i][0];
+    }
 
+    if (difference < greatestDecrease.value) {
+      greatestDecrease.value = difference;
+      greatestDecrease.month = finances[i][0];
+    }
+  }
+}
 
+let averageChange = totalChange / (finances.length - 1);
 
-console.log(`Total Months: ${finances.length}\nTotal: $${netProfit}\nAverage Change: ${averageChange}`)
+console.log("Financial Analysis");
+console.log("----------------");
+console.log(`Total Months: ${finances.length}`);
+console.log(`Total: $${netProfit}`);
+console.log(`Average Change: $${averageChange.toFixed(2)}`);
+console.log(`Greatest Increase in Profits: ${greatestIncrease.month} ($${greatestIncrease.value})`);
+console.log(`Greatest Decrease in Profits: ${greatestDecrease.month} ($${greatestDecrease.value})`);
+
